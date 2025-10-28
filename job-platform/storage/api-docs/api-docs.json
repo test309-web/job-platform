@@ -1,0 +1,676 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Job Platform API",
+        "description": "A comprehensive job platform API for employers and job seekers",
+        "contact": {
+            "email": "support@jobplatform.com"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000",
+            "description": "Local API Server"
+        }
+    ],
+    "paths": {
+        "/api/admin/dashboard": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Get admin dashboard stats",
+                "operationId": "2c29ca3389addbd18db1fff0f925cfd3",
+                "responses": {
+                    "200": {
+                        "description": "Dashboard stats retrieved successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/users": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Get all users",
+                "operationId": "6df5675e4162a2cb784fd7bd54a30be7",
+                "responses": {
+                    "200": {
+                        "description": "Users retrieved successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Create a new user",
+                "operationId": "43f3f1021714ea19fd3baa19329aee01",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "role"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "role": {
+                                        "type": "string",
+                                        "enum": [
+                                            "admin",
+                                            "employer",
+                                            "user"
+                                        ]
+                                    },
+                                    "company_name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User created successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/jobs": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Get all jobs",
+                "operationId": "e950b44f250d21634d3352cd3ae65f8c",
+                "responses": {
+                    "200": {
+                        "description": "Jobs retrieved successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/admin/applications": {
+            "get": {
+                "tags": [
+                    "Admin"
+                ],
+                "summary": "Get all applications",
+                "operationId": "8ce166ed186796c66512d3dca619f7cf",
+                "responses": {
+                    "200": {
+                        "description": "Applications retrieved successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/applications": {
+            "post": {
+                "tags": [
+                    "Applications"
+                ],
+                "summary": "Apply for a job",
+                "operationId": "838ab9ccbecd19fc861d7a1e17c865ba",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "job_id",
+                                    "cover_letter"
+                                ],
+                                "properties": {
+                                    "job_id": {
+                                        "type": "integer"
+                                    },
+                                    "cover_letter": {
+                                        "type": "string"
+                                    },
+                                    "resume": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Application submitted successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/my-applications": {
+            "get": {
+                "tags": [
+                    "Applications"
+                ],
+                "summary": "Get user's applications",
+                "operationId": "797d0c008549fc1b0b64d94de2beddf8",
+                "responses": {
+                    "200": {
+                        "description": "Applications retrieved successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/jobs/{jobId}/applications": {
+            "get": {
+                "tags": [
+                    "Applications"
+                ],
+                "summary": "Get applications for a job",
+                "operationId": "cb1dd71fce8dee679861b43415008f6c",
+                "parameters": [
+                    {
+                        "name": "jobId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Applications retrieved successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/applications/{id}/status": {
+            "put": {
+                "tags": [
+                    "Applications"
+                ],
+                "summary": "Update application status",
+                "operationId": "9e96a742a3c9597c993e51b4ba5deafa",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "status"
+                                ],
+                                "properties": {
+                                    "status": {
+                                        "type": "string",
+                                        "enum": [
+                                            "accepted",
+                                            "rejected"
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Application status updated successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/jobs": {
+            "get": {
+                "tags": [
+                    "Jobs"
+                ],
+                "summary": "Get all jobs",
+                "operationId": "9538d30d530d4c3680ea31fe228944e2",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search term",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Jobs retrieved successfully"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Jobs"
+                ],
+                "summary": "Create a new job",
+                "operationId": "36deb2a6480382cf8385911c10aeebf0",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "company",
+                                    "location",
+                                    "description"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "company": {
+                                        "type": "string"
+                                    },
+                                    "location": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "requirements": {
+                                        "type": "string"
+                                    },
+                                    "salary": {
+                                        "type": "string"
+                                    },
+                                    "employment_type": {
+                                        "type": "string"
+                                    },
+                                    "category": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Job created successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/jobs/{id}": {
+            "get": {
+                "tags": [
+                    "Jobs"
+                ],
+                "summary": "Get a specific job",
+                "operationId": "6de31489b41fa51255446ac2ad15b7fb",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Job retrieved successfully"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Jobs"
+                ],
+                "summary": "Update a job",
+                "operationId": "66762b778fbd20dd4fbd09628dabba17",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "company",
+                                    "location",
+                                    "description"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string"
+                                    },
+                                    "company": {
+                                        "type": "string"
+                                    },
+                                    "location": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "requirements": {
+                                        "type": "string"
+                                    },
+                                    "salary": {
+                                        "type": "string"
+                                    },
+                                    "employment_type": {
+                                        "type": "string"
+                                    },
+                                    "category": {
+                                        "type": "string"
+                                    },
+                                    "is_active": {
+                                        "type": "boolean"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Job updated successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Jobs"
+                ],
+                "summary": "Delete a job",
+                "operationId": "5537fd998abc3a62eef8c09e4ae52000",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Job deleted successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        },
+        "/api/employer/jobs": {
+            "get": {
+                "tags": [
+                    "Jobs"
+                ],
+                "summary": "Get employer's jobs",
+                "operationId": "9a701d4175422900c1064b25b4e22b6a",
+                "responses": {
+                    "200": {
+                        "description": "Jobs retrieved successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctum": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Application": {
+                "required": [
+                    "user_id",
+                    "job_id",
+                    "cover_letter"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "user_id": {
+                        "type": "integer"
+                    },
+                    "job_id": {
+                        "type": "integer"
+                    },
+                    "cover_letter": {
+                        "type": "string"
+                    },
+                    "resume": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "pending",
+                            "accepted",
+                            "rejected"
+                        ]
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Job": {
+                "required": [
+                    "title",
+                    "company",
+                    "location",
+                    "description",
+                    "employer_id"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "company": {
+                        "type": "string"
+                    },
+                    "location": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "requirements": {
+                        "type": "string"
+                    },
+                    "salary": {
+                        "type": "string"
+                    },
+                    "employment_type": {
+                        "type": "string"
+                    },
+                    "category": {
+                        "type": "string"
+                    },
+                    "employer_id": {
+                        "type": "integer"
+                    },
+                    "is_active": {
+                        "type": "boolean"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "User": {
+                "required": [
+                    "name",
+                    "email",
+                    "password",
+                    "role"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "role": {
+                        "type": "string",
+                        "enum": [
+                            "admin",
+                            "employer",
+                            "user"
+                        ]
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "sanctum": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Admin"
+        },
+        {
+            "name": "Applications"
+        },
+        {
+            "name": "Jobs"
+        }
+    ]
+}

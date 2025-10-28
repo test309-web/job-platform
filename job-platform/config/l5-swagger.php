@@ -5,7 +5,17 @@ return [
     'documentations' => [
         'default' => [
             'api' => [
-                'title' => 'L5 Swagger UI',
+                'title' => 'Job Platform API',
+                'description' => 'A comprehensive job platform API for employers and job seekers',
+                'termsOfService' => 'http://example.com/terms/',
+                'contact' => [
+                    'email' => 'support@jobplatform.com'
+                ],
+                'license' => [
+                    'name' => 'MIT',
+                    'url' => 'https://opensource.org/licenses/MIT'
+                ],
+                'version' => '1.0.0'
             ],
 
             'routes' => [
@@ -45,6 +55,7 @@ return [
                  */
                 'annotations' => [
                     base_path('app'),
+                    base_path('routes'),
                 ],
             ],
         ],
@@ -156,7 +167,10 @@ return [
              * @note This option overwrites `paths.excludes`
              * @see \OpenApi\scan
              */
-            'exclude' => [],
+            'exclude' => [
+                base_path('tests'),
+                base_path('storage'),
+            ],
 
             /*
              * Allows to generate specs either for OpenAPI 3.0.0 or OpenAPI 3.1.0.
@@ -193,28 +207,13 @@ return [
                 ],
                 */
 
-                /* Open API 3.0 support
-                'passport' => [ // Unique name of security
-                    'type' => 'oauth2', // The type of the security scheme. Valid values are "basic", "apiKey" or "oauth2".
-                    'description' => 'Laravel passport oauth2 security.',
-                    'in' => 'header',
-                    'scheme' => 'https',
-                    'flows' => [
-                        "password" => [
-                            "authorizationUrl" => config('app.url') . '/oauth/authorize',
-                            "tokenUrl" => config('app.url') . '/oauth/token',
-                            "refreshUrl" => config('app.url') . '/token/refresh',
-                            "scopes" => []
-                        ],
-                    ],
-                ],
+                /* Open API 3.0 support */
                 'sanctum' => [ // Unique name of security
                     'type' => 'apiKey', // Valid values are "basic", "apiKey" or "oauth2".
                     'description' => 'Enter token in format (Bearer <token>)',
                     'name' => 'Authorization', // The name of the header or query parameter to be used.
                     'in' => 'header', // The location of the API key. Valid values are "query" or "header".
                 ],
-                */
             ],
             'security' => [
                 /*
@@ -312,7 +311,7 @@ return [
          * Constants which can be used in annotations
          */
         'constants' => [
-            'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', 'http://my-default-host.com'),
+            'L5_SWAGGER_CONST_HOST' => env('L5_SWAGGER_CONST_HOST', 'http://localhost:8000'),
         ],
     ],
 ];

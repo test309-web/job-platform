@@ -73,10 +73,10 @@ class AuthController extends Controller
                 ], 401);
             }
 
-            // حذف أي tokens قديمة
+            // Delete any old tokens
             $user->tokens()->delete();
 
-            // إنشاء token جديدة
+            // Create new token
             $token = $user->createToken('auth_token')->plainTextToken;
 
             return response()->json([
@@ -101,7 +101,7 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         try {
-            // حذف الـ token الحالية
+            // Delete current token
             $request->user()->currentAccessToken()->delete();
 
             return response()->json([
